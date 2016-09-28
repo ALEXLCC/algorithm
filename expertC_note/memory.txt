@@ -1,0 +1,64 @@
+先初始化数据区
+再初始化代码区
+堆栈动态内存分配
+
+堆:
+从未初始化的数据区开始向上端动态增长。增长过程中虚拟地址值变大。
+栈从搞地质开始,向下动态增长,虚拟地址值变小。
+
+brk调整数据区大小。
+局部动态变量临时分配。编译器只记录其总大小,并保存在一个整型数中。
+
+动态链接效率低于静态链接。
+其先寻找动态库。未找到则加载硬盘上的动态库文件。
+
+
+宏函数比函数强大一点。
+但红函数中不可有递归的定义。
+C语言函数中定义宏函数,类似于局部函数。
+
+__FILE__	被编译的文件名
+__LINE__	当前行号
+__DATE__ 日期
+__TIME__	事件
+__STDC__ 编译器是否遵循标准c规范
+
+do{}while(0);
+条件编译,预编译时处理。
+#define C 1
+int main(){
+	#if(C==1)	//c==1则留下  否则编译时就丢弃。
+	printf("s");
+	#else
+	printf("b");
+	#endif
+	return 0;
+}
+gcc -DC=1 -E
+
+
+start of section header  224
+size of section header   64
+
+0x40  .text
+0x70  .data     //data
+0xa8   .bss	     //
+0xa8  .shstrtab   //保存section名称
+0x2e0  .symtab 
+0x3a0  .strtab  //保存用到的符号的名字
+0x3c8  ..rel   .text
+.rel  .text 告诉连接器哪些地方需要重定位。用完即删
+.symtab  符号表
+.bss  用于保存全局变量初始化的数据。
+readelf -a
+hexdump -C	ASCII
+objdump -d max.o	//反汇编
+readelf -d max
+
+MMV权限保护机制以页为单位。一个页面只能设置一种权限。
+segment在文件中便宜多少在页面中也要偏移多少。
+
+目标文件   相对地址。
+可执行文件  绝对地址。
+strip  可去除可执行文件中的符号信息。(不要对目标文件使用)
+连接器要用目标文件和共享库中的符号信息。

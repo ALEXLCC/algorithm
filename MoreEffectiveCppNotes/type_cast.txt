@@ -1,0 +1,12 @@
+应多使用cpp类型转换操作符。
+static_cast<>
+const_cast
+dynamic_cast
+reinterpret_cast
+
+static_cast可以完成c的旧式转型。
+static_cast不能将struct转换成int,或double转换成指针。
+const_cast转换表达式中的常量性或易变性。(唯一改变的是常量和易变)
+dynamic_cast执行集成体系中的安全向下转型或跨系转型。失败是null(指针)或exception(引用)
+
+reinterpret_cast与变异平台相关,不具备移植性。最常用的是转换函数指针。

@@ -1,0 +1,71 @@
+nm  ssss.o		readelf -s  .....
+U------------->undefined
+D-------------->
+T-------------->Text
+
+ar rs libstack.a  stack.o push.o pop.o
+      s-------------->create index
+ar r libstack.a  stack.o push.o pop.o
+ranlib libstack.a	------>crewate static libary index
+
+-L      dir of lib
+l       libary name
+-I      dir of include
+
+静态库连接时,连接器只把静态库中的目标文件取出来和可执行文件真正的链接在一起。
+链接器只从静态库中取出需要的目标文件做链接。
+
+gcc -c -g stack.c push.c pop.c is_empty.c
+Position Indepentend Code
+gcc -fPIC  stack.c push.c pop.c is_empty.c
+gcc -shared -o libstack.so stack.o push.o pop.o is_empty.o
+动态链接时,外部链接的地址,都是以0x0表示。
+gcc -shared -Wl,-soname,libstack.so.1 -o libstack.so stack.o push.o pop.o is_empty.o
+soname  real name(包含完整的共享库版本号,libcap.so.1.10) linker name(编译链接时使用,libc.so)
+soname 符号链接的名字,只包含库的主版本好号。 .dynamic段只记录共享库的soname
+
+gcc -print-search-dirs
+
+gcc -o main -g -L. -lstack -I. main.c
+
+./main 
+./main: error while loading shared libraries: libstack.so: cannot open shared object file: No such file or directory
+[root@localhost linuxStack]# ldd main
+        linux-vdso.so.1 =>  (0x00007ffffd7fd000)
+        libstack.so => not found
+        libc.so.6 => /lib64/libc.so.6 (0x000000391f000000)
+        /lib64/ld-linux-x86-64.so.2 (0x000000391ec00000)
+
+动态库查找路径
+LD_LIBRARY_PATH	
+缓存文件	/etc/ld.so.cache	缓存文件由ldconfig命令读取配置文件/etc/ld.so.conf生成。
+默认系统库文件。/usr/lib /lib
+
+LD_LIBRARY_PATH=/root/work/cprogram/linuxStack ./main
+export LD_LIBRARY_PATH=/root/work/cprogram/linuxStack 
+./main
+
+ldconfig -v
+添加 /root/work/cprogram/linuxStack 到/etc/ld.so.conf	常用
+
+复制libstack.so到/usr/lib 或 /lib
+
+
+gcc main.c -g -L. -lstack -I. -o main -Wl,-rpath,/root/work/cprogram/linuxStack
+readelf中多了一条rpath记录。 .dynamic段
+
+函数链接时,实为.plt段里的地址。	Procedure Linkage Table
+.plt段保存的也是指令。
+
+$@	规则中的目标文件	
+$<	规则中的第一个文件
+$?	规则中所有比目标新的文件,组成一个列表,以空格分开。
+$^	规则中多有的文件,空格分开,有重复的则消除 。
+
+main:main.o stack.o maze.o
+	gcc -o main main.o stack.o maze.o
+main:main.o stack.o maze.o
+	gcc $^ -o $@
+
+
+

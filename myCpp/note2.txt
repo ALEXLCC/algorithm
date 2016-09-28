@@ -1,0 +1,52 @@
+string
++=.......
+size()  length()   
+c_str() 返回c风格字符串(只读)
+
+
+不要返回非静态局部变量的地址。
+
+c++数组用vector<type> name表示。
+#include<vector>
+size() resize()   vector<int> name(长度,初值)
+
+x const *p  == const x *p
+x* const p  =====>p 只读 p必须初始化
+
+常量引用必须初始化
+
+g++ a.cpp bb.o  --->a.put  编译器会自动处理。
+
+
+class Cat{
+	string naem;
+};
+Cat c;
+c="abc"	----->  Cat(""abc);  自动调用构造函数。创建匿名对象类型转换。
+
+int c3();  函数声明。
+Cat c3();  函数声明  返回值为Cat的函数    ()优先级比较高。 Cat为一个type名字
+Cat c3;     定义一个Cat对象
+
+Cat c2=new Cat("aa");	//
+Cat c2=new Cat;		//无歧义
+
+Person(string name):name(name)
+
+new typename	delete addr
+new typename(init_value)     delete addr
+new typename[count]	delete[] addr
+
+delete只能释放由new分配的地址。
+
+静态成员在类外初始化。
+不该在构造函数里面初始化。
+构造函数对每一个对象都会调用一次。而且只会调用一次。
+复制语句不可再函数外进行。
+析构函数与构造函数一样只调用一次。有操作系统调用(貌似也可以手工调用)。且是在对象销毁时调用。
+注意在构造函数及析构函数调用时可能出现异常。没有构造完的对象系统是不会调用其析构函数对该对象进行部分析构的。
+
+static year
+int Person::year=1999;
+
+

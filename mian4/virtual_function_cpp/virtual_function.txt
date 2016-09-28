@@ -1,0 +1,188 @@
+1:    #include <iostream>
+2:    using namespace std;
+3:    class A
+4:    {
+5:    public:
+6:        A()  {     }
+00401230   push        ebp
+00401231   mov         ebp,esp
+00401233   sub         esp,44h
+00401236   push        ebx
+00401237   push        esi
+00401238   push        edi
+00401239   push        ecx
+0040123A   lea         edi,[ebp-44h]
+0040123D   mov         ecx,11h
+00401242   mov         eax,0CCCCCCCCh
+00401247   rep stos    dword ptr [edi]
+00401249   pop         ecx
+0040124A   mov         dword ptr [ebp-4],ecx
+0040124D   mov         eax,dword ptr [ebp-4]
+00401250   pop         edi
+00401251   pop         esi
+00401252   pop         ebx
+00401253   mov         esp,ebp
+00401255   pop         ebp
+00401256   ret
+7:        ~A() {    cout<<"~A"<<endl;   }
+00401260   push        ebp
+00401261   mov         ebp,esp
+00401263   sub         esp,44h
+00401266   push        ebx
+00401267   push        esi
+00401268   push        edi
+00401269   push        ecx
+0040126A   lea         edi,[ebp-44h]
+0040126D   mov         ecx,11h
+00401272   mov         eax,0CCCCCCCCh
+00401277   rep stos    dword ptr [edi]
+00401279   pop         ecx
+0040127A   mov         dword ptr [ebp-4],ecx
+0040127D   push        offset @ILT+35(std::endl) (00401028)
+00401282   push        offset string "~A" (0043201c)
+00401287   push        offset std::cout (00439528)
+0040128C   call        @ILT+175(std::operator<<) (004010b4)
+00401291   add         esp,8
+00401294   mov         ecx,eax
+00401296   call        @ILT+120(std::basic_ostream<char,std::char_traits<char> >::operator<<) (0040107d)
+0040129B   pop         edi
+0040129C   pop         esi
+0040129D   pop         ebx
+0040129E   add         esp,44h
+004012A1   cmp         ebp,esp
+004012A3   call        __chkesp (004095e0)
+004012A8   mov         esp,ebp
+004012AA   pop         ebp
+004012AB   ret
+8:    };
+9:
+10:   class B:public A
+11:   {
+12:       public:
+13:           B(A &a):_a(a)
+14:           {
+004012C0   push        ebp
+004012C1   mov         ebp,esp
+004012C3   sub         esp,44h
+004012C6   push        ebx
+004012C7   push        esi
+004012C8   push        edi
+004012C9   push        ecx
+004012CA   lea         edi,[ebp-44h]
+004012CD   mov         ecx,11h
+004012D2   mov         eax,0CCCCCCCCh
+004012D7   rep stos    dword ptr [edi]
+004012D9   pop         ecx
+004012DA   mov         dword ptr [ebp-4],ecx
+004012DD   mov         ecx,dword ptr [ebp-4]
+004012E0   call        @ILT+80(A::A) (00401055)
+004012E5   mov         eax,dword ptr [ebp+8]
+004012E8   mov         cl,byte ptr [eax]
+004012EA   mov         edx,dword ptr [ebp-4]
+004012ED   mov         byte ptr [edx],cl
+15:
+16:           }
+004012EF   mov         eax,dword ptr [ebp-4]
+004012F2   pop         edi
+004012F3   pop         esi
+004012F4   pop         ebx
+004012F5   add         esp,44h
+004012F8   cmp         ebp,esp
+004012FA   call        __chkesp (004095e0)
+004012FF   mov         esp,ebp
+00401301   pop         ebp
+00401302   ret         4
+17:           ~B()
+18:           {
+00401320   push        ebp
+00401321   mov         ebp,esp
+00401323   push        0FFh
+00401325   push        offset __ehhandler$??1B@@QAE@XZ (0041fc82)
+0040132A   mov         eax,fs:[00000000]
+00401330   push        eax
+00401331   mov         dword ptr fs:[0],esp
+00401338   sub         esp,44h
+0040133B   push        ebx
+0040133C   push        esi
+0040133D   push        edi
+0040133E   push        ecx
+0040133F   lea         edi,[ebp-50h]
+00401342   mov         ecx,11h
+00401347   mov         eax,0CCCCCCCCh
+0040134C   rep stos    dword ptr [edi]
+0040134E   pop         ecx
+0040134F   mov         dword ptr [ebp-10h],ecx
+00401352   mov         dword ptr [ebp-4],1
+19:               cout<<"~B"<<endl;
+00401359   push        offset @ILT+35(std::endl) (00401028)
+0040135E   push        offset string "~B" (00432020)
+00401363   push        offset std::cout (00439528)
+00401368   call        @ILT+175(std::operator<<) (004010b4)
+0040136D   add         esp,8
+00401370   mov         ecx,eax
+00401372   call        @ILT+120(std::basic_ostream<char,std::char_traits<char> >::operator<<) (0040107d)
+20:           }
+00401377   mov         byte ptr [ebp-4],0
+0040137B   mov         ecx,dword ptr [ebp-10h]
+0040137E   call        @ILT+110(A::~A) (00401073)
+00401383   mov         dword ptr [ebp-4],0FFFFFFFFh
+0040138A   mov         ecx,dword ptr [ebp-10h]
+0040138D   call        @ILT+110(A::~A) (00401073)
+00401392   mov         ecx,dword ptr [ebp-0Ch]
+00401395   mov         dword ptr fs:[0],ecx
+0040139C   pop         edi
+0040139D   pop         esi
+0040139E   pop         ebx
+0040139F   add         esp,50h
+004013A2   cmp         ebp,esp
+004013A4   call        __chkesp (004095e0)
+004013A9   mov         esp,ebp
+004013AB   pop         ebp
+004013AC   ret
+21:       private:
+22:           A _a;
+23:       };
+24:
+25:   int main(void)
+26:    {
+00401190   push        ebp
+00401191   mov         ebp,esp
+00401193   push        0FFh
+00401195   push        offset __ehhandler$_main (0041fc59)
+0040119A   mov         eax,fs:[00000000]
+004011A0   push        eax
+004011A1   mov         dword ptr fs:[0],esp
+004011A8   sub         esp,48h
+004011AB   push        ebx
+004011AC   push        esi
+004011AD   push        edi
+004011AE   lea         edi,[ebp-54h]
+004011B1   mov         ecx,12h
+004011B6   mov         eax,0CCCCCCCCh
+004011BB   rep stos    dword ptr [edi]
+27:           A a;       //很简单，定义a的时候调用了一次构造函数
+004011BD   lea         ecx,[ebp-10h]
+004011C0   call        @ILT+80(A::A) (00401055)
+004011C5   mov         dword ptr [ebp-4],0
+28:           B b(a);
+004011CC   lea         eax,[ebp-10h]
+004011CF   push        eax
+004011D0   lea         ecx,[ebp-14h]
+004011D3   call        @ILT+155(B::B) (004010a0)
+29:   }
+004011D8   lea         ecx,[ebp-14h]
+004011DB   call        @ILT+130(B::~B) (00401087)
+004011E0   mov         dword ptr [ebp-4],0FFFFFFFFh
+004011E7   lea         ecx,[ebp-10h]
+004011EA   call        @ILT+110(A::~A) (00401073)
+004011EF   mov         ecx,dword ptr [ebp-0Ch]
+004011F2   mov         dword ptr fs:[0],ecx
+004011F9   pop         edi
+004011FA   pop         esi
+004011FB   pop         ebx
+004011FC   add         esp,54h
+004011FF   cmp         ebp,esp
+00401201   call        __chkesp (004095e0)
+00401206   mov         esp,ebp
+00401208   pop         ebp
+00401209   ret

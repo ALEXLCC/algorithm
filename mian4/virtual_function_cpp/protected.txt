@@ -1,0 +1,464 @@
+1:    #include <iostream>
+2:    using namespace std;
+3:
+4:    class Base {
+5:        public:
+6:        Base(int j): i(j)  {}
+00401800   push        ebp
+00401801   mov         ebp,esp
+00401803   sub         esp,44h
+00401806   push        ebx
+00401807   push        esi
+00401808   push        edi
+00401809   push        ecx
+0040180A   lea         edi,[ebp-44h]
+0040180D   mov         ecx,11h
+00401812   mov         eax,0CCCCCCCCh
+00401817   rep stos    dword ptr [edi]
+00401819   pop         ecx
+0040181A   mov         dword ptr [ebp-4],ecx
+0040181D   mov         eax,dword ptr [ebp-4]
+00401820   mov         ecx,dword ptr [ebp+8]
+00401823   mov         dword ptr [eax+4],ecx
+00401826   mov         edx,dword ptr [ebp-4]
+00401829   mov         dword ptr [edx],offset Base::`vftable' (0046e028)
+0040182F   mov         eax,dword ptr [ebp-4]
+00401832   pop         edi
+00401833   pop         esi
+00401834   pop         ebx
+00401835   mov         esp,ebp
+00401837   pop         ebp
+00401838   ret         4
+7:        virtual~Base() {}
+00401900   push        ebp
+00401901   mov         ebp,esp
+00401903   sub         esp,44h
+00401906   push        ebx
+00401907   push        esi
+00401908   push        edi
+00401909   push        ecx
+0040190A   lea         edi,[ebp-44h]
+0040190D   mov         ecx,11h
+00401912   mov         eax,0CCCCCCCCh
+00401917   rep stos    dword ptr [edi]
+00401919   pop         ecx
+0040191A   mov         dword ptr [ebp-4],ecx
+0040191D   mov         eax,dword ptr [ebp-4]
+00401920   mov         dword ptr [eax],offset Base::`vftable' (0046e028)
+00401926   pop         edi
+00401927   pop         esi
+00401928   pop         ebx
+00401929   mov         esp,ebp
+0040192B   pop         ebp
+0040192C   ret
+
+
+8:        void func1() {
+004016F0   push        ebp
+004016F1   mov         ebp,esp
+004016F3   sub         esp,44h
+004016F6   push        ebx
+004016F7   push        esi
+004016F8   push        edi
+004016F9   push        ecx
+004016FA   lea         edi,[ebp-44h]
+004016FD   mov         ecx,11h
+00401702   mov         eax,0CCCCCCCCh
+00401707   rep stos    dword ptr [edi]
+00401709   pop         ecx
+0040170A   mov         dword ptr [ebp-4],ecx	//this
+9:            i *= 10;
+0040170D   mov         eax,dword ptr [ebp-4]
+00401710   mov         ecx,dword ptr [eax+4]
+00401713   imul        ecx,ecx,0Ah
+00401716   mov         edx,dword ptr [ebp-4]
+00401719   mov         dword ptr [edx+4],ecx
+10:           func2();
+0040171C   mov         eax,dword ptr [ebp-4]
+0040171F   mov         edx,dword ptr [eax]
+00401721   mov         esi,esp
+00401723   mov         ecx,dword ptr [ebp-4]	//this
+00401726   call        dword ptr [edx+4]
+00401729   cmp         esi,esp
+0040172B   call        __chkesp (00420e90)
+11:       }
+00401730   pop         edi
+00401731   pop         esi
+00401732   pop         ebx
+00401733   add         esp,44h
+00401736   cmp         ebp,esp
+00401738   call        __chkesp (00420e90)
+0040173D   mov         esp,ebp
+0040173F   pop         ebp
+00401740   ret
+12:       int getValue() {
+00401760   push        ebp
+00401761   mov         ebp,esp
+00401763   sub         esp,44h
+00401766   push        ebx
+00401767   push        esi
+00401768   push        edi
+00401769   push        ecx
+0040176A   lea         edi,[ebp-44h]
+0040176D   mov         ecx,11h
+00401772   mov         eax,0CCCCCCCCh
+00401777   rep stos    dword ptr [edi]
+00401779   pop         ecx
+0040177A   mov         dword ptr [ebp-4],ecx
+13:           return  i;
+0040177D   mov         eax,dword ptr [ebp-4]
+00401780   mov         eax,dword ptr [eax+4]
+14:       }
+00401783   pop         edi
+00401784   pop         esi
+00401785   pop         ebx
+00401786   mov         esp,ebp
+00401788   pop         ebp
+00401789   ret
+15:       protected:
+16:       virtual void func2() {
+00401850   push        ebp
+00401851   mov         ebp,esp
+00401853   sub         esp,44h
+00401856   push        ebx
+00401857   push        esi
+00401858   push        edi
+00401859   push        ecx
+0040185A   lea         edi,[ebp-44h]
+0040185D   mov         ecx,11h
+00401862   mov         eax,0CCCCCCCCh
+00401867   rep stos    dword ptr [edi]
+00401869   pop         ecx
+0040186A   mov         dword ptr [ebp-4],ecx
+17:           i++;
+0040186D   mov         eax,dword ptr [ebp-4]
+00401870   mov         ecx,dword ptr [eax+4]
+00401873   add         ecx,1
+00401876   mov         edx,dword ptr [ebp-4]
+00401879   mov         dword ptr [edx+4],ecx
+18:       }
+0040187C   pop         edi
+0040187D   pop         esi
+0040187E   pop         ebx
+0040187F   mov         esp,ebp
+00401881   pop         ebp
+00401882   ret
+
+19:       protected:
+20:       int i;
+21:   };
+22:   class Child: public Base {
+23:       public:
+24:       Child(int j): Base(j) {}
+004017A0   push        ebp
+004017A1   mov         ebp,esp
+004017A3   sub         esp,44h
+004017A6   push        ebx
+004017A7   push        esi
+004017A8   push        edi
+004017A9   push        ecx
+004017AA   lea         edi,[ebp-44h]
+004017AD   mov         ecx,11h
+004017B2   mov         eax,0CCCCCCCCh
+004017B7   rep stos    dword ptr [edi]
+004017B9   pop         ecx
+004017BA   mov         dword ptr [ebp-4],ecx
+004017BD   mov         eax,dword ptr [ebp+8]
+004017C0   push        eax
+004017C1   mov         ecx,dword ptr [ebp-4]
+004017C4   call        @ILT+35(Base::Base) (00401028)
+004017C9   mov         ecx,dword ptr [ebp-4]
+004017CC   mov         dword ptr [ecx],offset Child::`vftable' (0046e01c)
+004017D2   mov         eax,dword ptr [ebp-4]
+004017D5   pop         edi
+004017D6   pop         esi
+004017D7   pop         ebx
+004017D8   add         esp,44h
+004017DB   cmp         ebp,esp
+004017DD   call        __chkesp (00420e90)
+004017E2   mov         esp,ebp
+004017E4   pop         ebp
+004017E5   ret         4
+25:       void func1() {
+26:           i *= 100;
+27:           func2();
+28:       }
+29:       protected:
+30:       void func2() {
+00401940   push        ebp
+00401941   mov         ebp,esp
+00401943   sub         esp,44h
+00401946   push        ebx
+00401947   push        esi
+00401948   push        edi
+00401949   push        ecx
+0040194A   lea         edi,[ebp-44h]
+0040194D   mov         ecx,11h
+00401952   mov         eax,0CCCCCCCCh
+00401957   rep stos    dword ptr [edi]
+00401959   pop         ecx
+0040195A   mov         dword ptr [ebp-4],ecx
+31:           i += 2;
+0040195D   mov         eax,dword ptr [ebp-4]
+00401960   mov         ecx,dword ptr [eax+4]
+00401963   add         ecx,2
+00401966   mov         edx,dword ptr [ebp-4]
+00401969   mov         dword ptr [edx+4],ecx
+32:       }
+0040196C   pop         edi
+0040196D   pop         esi
+0040196E   pop         ebx
+0040196F   mov         esp,ebp
+00401971   pop         ebp
+00401972   ret
+
+
+33:   };
+34:   int main() {
+004015D0   push        ebp
+004015D1   mov         ebp,esp
+004015D3   push        0FFh
+004015D5   push        offset __ehhandler$_main (00447c4b)
+004015DA   mov         eax,fs:[00000000]
+004015E0   push        eax
+004015E1   mov         dword ptr fs:[0],esp
+004015E8   sub         esp,5Ch
+004015EB   push        ebx
+004015EC   push        esi
+004015ED   push        edi
+004015EE   lea         edi,[ebp-68h]
+004015F1   mov         ecx,17h
+004015F6   mov         eax,0CCCCCCCCh
+004015FB   rep stos    dword ptr [edi]
+35:       Base * pb = new Child(1);
+004015FD   push        8
+004015FF   call        operator new (004209a0)
+00401604   add         esp,4
+00401607   mov         dword ptr [ebp-18h],eax
+0040160A   mov         dword ptr [ebp-4],0
+00401611   cmp         dword ptr [ebp-18h],0
+00401615   je          main+56h (00401626)
+00401617   push        1
+00401619   mov         ecx,dword ptr [ebp-18h]
+0040161C   call        @ILT+405(Child::Child) (0040119a)
+00401621   mov         dword ptr [ebp-24h],eax			eax == ecx
+00401624   jmp         main+5Dh (0040162d)
+00401626   mov         dword ptr [ebp-24h],0
+0040162D   mov         eax,dword ptr [ebp-24h]
+00401630   mov         dword ptr [ebp-14h],eax
+00401633   mov         dword ptr [ebp-4],0FFFFFFFFh
+0040163A   mov         ecx,dword ptr [ebp-14h]
+0040163D   mov         dword ptr [ebp-10h],ecx			this
+36:       pb->func1();
+00401640   mov         ecx,dword ptr [ebp-10h]
+00401643   call        @ILT+160(Base::func1) (004010a5)		this
+37:       cout << pb->getValue() << endl;
+00401648   push        offset @ILT+220(std::endl) (004010e1)
+0040164D   mov         ecx,dword ptr [ebp-10h]
+00401650   call        @ILT+575(Base::getValue) (00401244)
+00401655   push        eax
+00401656   mov         ecx,offset std::cout (0047be90)
+0040165B   call        @ILT+280(std::basic_ostream<char,std::char_traits<char> >::operator<<) (0040111d)
+00401660   mov         ecx,eax
+00401662   call        @ILT+515(std::basic_ostream<char,std::char_traits<char> >::operator<<) (00401208)
+38:       delete pb;
+00401667   mov         edx,dword ptr [ebp-10h]
+0040166A   mov         dword ptr [ebp-20h],edx
+0040166D   mov         eax,dword ptr [ebp-20h]
+00401670   mov         dword ptr [ebp-1Ch],eax
+00401673   cmp         dword ptr [ebp-1Ch],0
+00401677   je          main+0C3h (00401693)
+00401679   mov         esi,esp
+0040167B   push        1
+0040167D   mov         ecx,dword ptr [ebp-1Ch]
+00401680   mov         edx,dword ptr [ecx]
+00401682   mov         ecx,dword ptr [ebp-1Ch]
+00401685   call        dword ptr [edx]
+00401687   cmp         esi,esp
+00401689   call        __chkesp (00420e90)
+0040168E   mov         dword ptr [ebp-28h],eax
+00401691   jmp         main+0CAh (0040169a)
+00401693   mov         dword ptr [ebp-28h],0
+39:   }
+0040169A   mov         ecx,dword ptr [ebp-0Ch]
+0040169D   mov         dword ptr fs:[0],ecx
+004016A4   pop         edi
+004016A5   pop         esi
+004016A6   pop         ebx
+004016A7   add         esp,68h
+004016AA   cmp         ebp,esp
+004016AC   call        __chkesp (00420e90)
+004016B1   mov         esp,ebp
+004016B3   pop         ebp
+004016B4   ret
+
+@ILT+160(?func1@Base@@QAEXXZ):
+004010A5   jmp         Base::func1 (004016f0)
+@ILT+130(??1Base@@UAE@XZ):
+00401087   jmp         Base::~Base (00401900)
+@ILT+55(?func2@Child@@MAEXXZ):
+0040103C   jmp         Child::func2 (00401940)
+@ILT+35(??0Base@@QAE@H@Z):
+00401028   jmp         Base::Base (00401800)
+@ILT+40(?func2@Base@@MAEXXZ):
+0040102D   jmp         Base::func2 (00401850)
+@ILT+130(??1Base@@UAE@XZ):
+00401087   jmp         Base::~Base (00401900)
+@ILT+405(??0Child@@QAE@H@Z):
+0040119A   jmp         Child::Child (004017a0)
+@ILT+575(?getValue@Base@@QAEHXZ):
+00401244   jmp         Base::getValue (00401760)
+@ILT+585(_main):
+0040124E   jmp         main (004015d0)
+@ILT+610(??_EChild@@UAEPAXI@Z):
+00401267   jmp         Child::`scalar deleting destructor' (00401980)
+@ILT+615(??_EBase@@UAEPAXI@Z):
+0040126C   jmp         Base::`scalar deleting destructor' (00401890)
+@ILT+660(??1Child@@UAE@XZ):
+00401299   jmp         Child::~Child (004019f0)
+@ILT+575(?getValue@Base@@QAEHXZ):
+00401244   jmp         Base::getValue (00401760)
+@ILT+585(_main):
+0040124E   jmp         main (004015d0)
+
+@ILT+575(?func1@Child@@UAEXXZ):
+00401244   jmp         Child::func1 (00401960)
+
+Child::`scalar deleting destructor':
+00401980   push        ebp
+00401981   mov         ebp,esp
+00401983   sub         esp,44h
+00401986   push        ebx
+00401987   push        esi
+00401988   push        edi
+00401989   push        ecx
+0040198A   lea         edi,[ebp-44h]
+0040198D   mov         ecx,11h
+00401992   mov         eax,0CCCCCCCCh
+00401997   rep stos    dword ptr [edi]
+00401999   pop         ecx
+0040199A   mov         dword ptr [ebp-4],ecx
+0040199D   mov         ecx,dword ptr [ebp-4]
+004019A0   call        @ILT+660(Child::~Child) (00401299)
+004019A5   mov         eax,dword ptr [ebp+8]
+004019A8   and         eax,1
+004019AB   test        eax,eax
+004019AD   je          Child::`scalar deleting destructor'+3Bh (004019bb)
+004019AF   mov         ecx,dword ptr [ebp-4]
+004019B2   push        ecx
+004019B3   call        operator delete (00406d20)
+004019B8   add         esp,4
+004019BB   mov         eax,dword ptr [ebp-4]
+004019BE   pop         edi
+004019BF   pop         esi
+004019C0   pop         ebx
+004019C1   add         esp,44h
+004019C4   cmp         ebp,esp
+004019C6   call        __chkesp (00420e90)
+004019CB   mov         esp,ebp
+004019CD   pop         ebp
+004019CE   ret         4
+
+Base::`scalar deleting destructor':
+00401890   push        ebp
+00401891   mov         ebp,esp
+00401893   sub         esp,44h
+00401896   push        ebx
+00401897   push        esi
+00401898   push        edi
+00401899   push        ecx
+0040189A   lea         edi,[ebp-44h]
+0040189D   mov         ecx,11h
+004018A2   mov         eax,0CCCCCCCCh
+004018A7   rep stos    dword ptr [edi]
+004018A9   pop         ecx
+004018AA   mov         dword ptr [ebp-4],ecx
+004018AD   mov         ecx,dword ptr [ebp-4]
+004018B0   call        @ILT+130(Base::~Base) (00401087)
+004018B5   mov         eax,dword ptr [ebp+8]
+004018B8   and         eax,1
+004018BB   test        eax,eax
+004018BD   je          Base::`scalar deleting destructor'+3Bh (004018cb)
+004018BF   mov         ecx,dword ptr [ebp-4]
+004018C2   push        ecx
+004018C3   call        operator delete (00406d20)
+004018C8   add         esp,4
+004018CB   mov         eax,dword ptr [ebp-4]
+004018CE   pop         edi
+004018CF   pop         esi
+004018D0   pop         ebx
+004018D1   add         esp,44h
+004018D4   cmp         ebp,esp
+004018D6   call        __chkesp (00420e90)
+004018DB   mov         esp,ebp
+004018DD   pop         ebp
+004018DE   ret         4
+
+Child::`scalar deleting destructor':
+00401980   push        ebp
+00401981   mov         ebp,esp
+00401983   sub         esp,44h
+00401986   push        ebx
+00401987   push        esi
+00401988   push        edi
+00401989   push        ecx
+0040198A   lea         edi,[ebp-44h]
+0040198D   mov         ecx,11h
+00401992   mov         eax,0CCCCCCCCh
+00401997   rep stos    dword ptr [edi]
+00401999   pop         ecx
+0040199A   mov         dword ptr [ebp-4],ecx
+0040199D   mov         ecx,dword ptr [ebp-4]
+004019A0   call        @ILT+660(Child::~Child) (00401299)
+004019A5   mov         eax,dword ptr [ebp+8]
+004019A8   and         eax,1
+004019AB   test        eax,eax
+004019AD   je          Child::`scalar deleting destructor'+3Bh (004019bb)
+004019AF   mov         ecx,dword ptr [ebp-4]
+004019B2   push        ecx
+004019B3   call        operator delete (00406d20)
+004019B8   add         esp,4
+004019BB   mov         eax,dword ptr [ebp-4]
+004019BE   pop         edi
+004019BF   pop         esi
+004019C0   pop         ebx
+004019C1   add         esp,44h
+004019C4   cmp         ebp,esp
+004019C6   call        __chkesp (00420e90)
+004019CB   mov         esp,ebp
+004019CD   pop         ebp
+004019CE   ret         4
+
+Child::~Child:
+004019F0   push        ebp
+004019F1   mov         ebp,esp
+004019F3   sub         esp,44h
+004019F6   push        ebx
+004019F7   push        esi
+004019F8   push        edi
+004019F9   push        ecx
+004019FA   lea         edi,[ebp-44h]
+004019FD   mov         ecx,11h
+00401A02   mov         eax,0CCCCCCCCh
+00401A07   rep stos    dword ptr [edi]
+00401A09   pop         ecx
+00401A0A   mov         dword ptr [ebp-4],ecx
+00401A0D   mov         ecx,dword ptr [ebp-4]
+00401A10   call        @ILT+130(Base::~Base) (00401087)
+00401A15   pop         edi
+00401A16   pop         esi
+00401A17   pop         ebx
+00401A18   add         esp,44h
+00401A1B   cmp         ebp,esp
+00401A1D   call        __chkesp (00420e90)
+00401A22   mov         esp,ebp
+00401A24   pop         ebp
+00401A25   ret
+
+若是改成 虚函数func1()
+36:       pb->func1();
+00401650   mov         edx,dword ptr [ebp-10h]
+00401653   mov         eax,dword ptr [edx]
+00401655   mov         esi,esp
+00401657   mov         ecx,dword ptr [ebp-10h]
+0040165A   call        dword ptr [eax+4]

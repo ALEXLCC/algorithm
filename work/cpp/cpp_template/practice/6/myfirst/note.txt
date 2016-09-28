@@ -1,0 +1,5 @@
+most compiler can acccept it.
+but linker will not.
+tips cannot find the define of print_typeof()
+as two part information are in different file.
+the compiler see the call of print_typeof() [double] but not see the declareation.

@@ -1,0 +1,131 @@
+start:0,1
+end:9,8
+#S######.#
+......#..#
+.#.##.##.#
+.#........
+##.##....#
+....#....#
+.#######.#
+....#.....
+.####.###.
+....#...G#
+before while
+After while!
+push   pos  1,1  len  1
+After while!
+push   pos  1,2  len  2
+push   pos  1,0  len  2
+After while!
+push   pos  1,3  len  3
+push   pos  2,2  len  3
+After while!
+push   pos  2,0  len  3
+After while!
+push   pos  1,4  len  4
+After while!
+push   pos  3,2  len  4
+After while!
+push   pos  3,0  len  4
+After while!
+push   pos  1,5  len  5
+After while!
+push   pos  3,3  len  5
+push   pos  4,2  len  5
+After while!
+After while!
+push   pos  2,5  len  6
+After while!
+push   pos  3,4  len  6
+After while!
+push   pos  5,2  len  6
+After while!
+push   pos  3,5  len  7
+After while!
+After while!
+push   pos  5,3  len  7
+push   pos  5,1  len  7
+After while!
+push   pos  3,6  len  8
+push   pos  4,5  len  8
+After while!
+After while!
+push   pos  5,0  len  8
+After while!
+push   pos  3,7  len  9
+push   pos  4,6  len  9
+After while!
+push   pos  5,5  len  9
+After while!
+push   pos  6,0  len  9
+After while!
+push   pos  3,8  len  10
+push   pos  4,7  len  10
+After while!
+push   pos  5,6  len  10
+After while!
+After while!
+push   pos  7,0  len  10
+After while!
+push   pos  3,9  len  11
+push   pos  2,8  len  11
+push   pos  4,8  len  11
+After while!
+push   pos  5,7  len  11
+After while!
+After while!
+push   pos  7,1  len  11
+push   pos  8,0  len  11
+After while!
+After while!
+push   pos  1,8  len  12
+After while!
+push   pos  5,8  len  12
+After while!
+After while!
+push   pos  7,2  len  12
+After while!
+push   pos  9,0  len  12
+After while!
+push   pos  0,8  len  13
+push   pos  1,7  len  13
+After while!
+push   pos  6,8  len  13
+After while!
+push   pos  7,3  len  13
+After while!
+push   pos  9,1  len  13
+After while!
+After while!
+After while!
+push   pos  7,8  len  14
+After while!
+After while!
+push   pos  9,2  len  14
+After while!
+push   pos  7,9  len  15
+push   pos  7,7  len  15
+After while!
+push   pos  9,3  len  15
+After while!
+push   pos  8,9  len  16
+After while!
+push   pos  7,6  len  16
+After while!
+After while!
+After while!
+push   pos  7,5  len  17
+After while!
+push   pos  8,5  len  18
+After while!
+push   pos  9,5  len  19
+After while!
+push   pos  9,6  len  20
+After while!
+push   pos  9,7  len  21
+After while!
+push   pos  9,8  len  22
+After while!
+
+
+result:22

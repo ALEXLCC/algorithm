@@ -1,0 +1,38 @@
+不可用一个数组给另一个数组初始化
+vector v;
+v.empty()
+v.push_back(t);
+v.size();
+v[n];
+v1=v2;	v2 copy  to v1
+v1={a,b,c...};
+v1==v2;
+v1!=v2;
+<,<=,>,>=;字典比较
+v.begin();
+v.end();
+
+
+
+
+static_cast<>	只要不包含底层const,都可以用static_cast<>
+double p=static_cast<double>(j)/i;
+const_cast<>	只能改变对象的底层const
+const char* pc;
+char* p=const_cast<char*>(pc);
+  const char* pc="csd";
+    char* p=const_cast<char*>(pc);
+    p[2]='M';		//segment error	内存访问错误。
+
+reinterpret_cast   为运算对象的位模式提供较低层次上的重新解释。
+
+
+case true:
+	string filename;  //绕过控制流隐式初始化一个变量。
+	int val=0;	          //错误绕过控制流显示初始化一个变量。
+	int jval;	         //正确  因为jval没有初始化。
+
+vector v;
+for(auto &r: v)
+
+不要反悔局部对象的引用或指针

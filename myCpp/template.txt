@@ -1,0 +1,19 @@
+template<typename T>
+class MyClass{
+	typename T::SubType * ptr;
+	//此处的typename用来说明.
+	SubType是类T内部的一个子类型。
+};
+T::SubType* ptr;  ------->   SubType muls ptr
+
+
+template<typename T , int N>  N一般用于指定长度。目前只保证int
+int N 非类型形参
+
+编译器替换模板形参时产生一个新的函数,构造重载。编译器自动实例化。
+类模板由编译器将具体类型替换产生一个类。不同实例化得到不同的类。
+其之间并无重载关系。必需实例化(编译器无足够信息去实例化)。
+模板只要不实例化则不会在可执行文件中产生其代码。
+特殊情况下可处理指定类型。
+编译器总是先找与类型最匹配的特殊化版本来使用。没有则使用模板来创建。
+template<> 全特化。

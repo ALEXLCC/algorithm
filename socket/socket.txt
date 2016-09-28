@@ -1,0 +1,163 @@
+socket
+
+加载套接字库
+int WSAStartup(
+  WORD wVersionRequested,
+  LPWSADATA lpWSAData
+);
+
+typedef struct WSAData {
+  WORD                  wVersion;	//use
+  WORD                  wHighVersion;	//use
+  char                  szDescription[WSADESCRIPTION_LEN+1];
+  char                  szSystemStatus[WSASYS_STATUS_LEN+1];
+  unsigned short        iMaxSockets;
+  unsigned short        iMaxUdpDg;
+  char FAR *            lpVendorInfo;
+} WSADATA, *LPWSADATA; 
+
+SOCKET socket(
+  int af,	//地址簇,只能是AF_INET,(或PF_INET)
+  int type,     //socket类型,SOCK_STREAM,SOCK_DGRAM,
+  int protocol  //特定地址家族相关的协议,0表示自动识别。
+);
+
+int bind(
+  SOCKET s,         // Descriptor identifying an unbound socket
+  //要绑定的套接字
+  const struct sockaddr FAR *name,  
+  //Address to assign to the socket from the SOCKADDR structure
+  int namelen         //Length of the value in the name parameter. 
+               
+);
+The sockaddr structure varies depending on the protocol selected.
+Except for the sa_family parameter, sockaddr contents are expressed
+in network byte order.
+
+struct sockaddr {
+  u_short    sa_family;
+  char       sa_data[14];
+};   
+
+In Windows Sockets 2, the name parameter is not strictly
+interpreted as a pointer to a sockaddr structure. It is presented
+in this manner for Windows Sockets compatibility. The actual structure
+is interpreted differently in the context of different address families. 
+The only requirements are that the first u_short is the address family
+and the total size of the memory buffer in bytes is namelen.
+
+The structure below is used with TCP/IP. Other protocols use similar structures. 
+
+struct sockaddr_in {
+        short   sin_family;	//socket inet family
+        u_short sin_port;	//
+        struct  in_addr sin_addr;
+        char    sin_zero[8];
+};		//2+2+4+8=16bytes
+
+sin_family 
+	Address family (must be AF_INET). 
+sin_port 
+	IP port. 
+sin_addr 
+	IP address. 
+sin_zero 
+	Padding to make structure the same size as SOCKADDR.
+
+
+struct   in_addr {
+    union   {
+         struct{
+             unsigned  char   s_b1,
+                              s_b2,
+                              s_b3,
+                              s_b4;
+		}S_un_b;	//byte	1 
+          struct{
+             unsigned  short  s_w1,
+                              s_w2;
+              }S_un_w;		//word	2
+          unsigned long  S_addr;//DWORD	4
+     } S_un;
+};
+
+unsigned long inet_addr(
+  const char   FAR *cp  
+);
+
+char FAR * inet_ntoa(
+  struct   in_addr in  
+);
+
+int listen(
+  SOCKET s,    
+  int backlog  //最大等待连接数
+);
+s 
+[in] Descriptor identifying a bound, unconnected socket. 
+backlog 
+[in] Maximum length of the queue of pending connections.
+If set to SOMAXCONN, the underlying service provider responsible
+for socket s will set the backlog to a maximum reasonable value.
+There is no standard provision to obtain the actual backlog value.
+
+
+SOCKET accept(
+  SOCKET s,
+  struct sockaddr FAR *addr,
+  int FAR *addrlen
+);
+
+s 
+[in] Descriptor identifying a socket that has been placed in a
+listening state with the listen function. The connection is actually
+made with the socket that is returned by accept. 
+addr 
+[out] Optional pointer to a buffer that receives the address of the 
+connecting entity, as known to the communications layer. The exact 
+format of the addr parameter is determined by the address family that
+was established when the socket was created. 
+addrlen 
+[out] Optional pointer to an integer that contains the length of addr. 
+
+
+Although WSAAsyncSelect immediately disables event message posting for
+ the socket in this instance, it is possible that messages could be 
+waiting in the application's message queue. Therefore, the application 
+must be prepared to receive network event messages even after 
+cancellation. Closing a socket with closesocket also cancels 
+WSAAsyncSelect message sending, but the same caveat about messages 
+in the queue still applies.
+
+The socket created by the accept function has the same properties 
+as the listening socket used to accept it. Consequently, 
+WSAAsyncSelect events set for the listening socket also 
+apply to the accepted socket. For example, if a listening 
+socket has WSAAsyncSelect events FD_ACCEPT, FD_READ, and 
+FD_WRITE, then any socket accepted on that listening socket
+ will also have FD_ACCEPT, FD_READ, and FD_WRITE events with
+ the same wMsg value used for messages. If a different wMsg 
+or events are desired, the application should call 
+WSAAsyncSelect, passing the accepted socket and the 
+desired new information.
+
+When one of the nominated network events occurs on the 
+specified socket s, the application's window hWnd receives
+ message wMsg. The wParam parameter identifies the socket 
+on which a network event has occurred. The low word of 
+lParam specifies the network event that has occurred. 
+The high word of lParam contains any error code. The error
+ code be any error as defined in Winsock2.h.
+
+Note  Upon receipt of an event notification message, the 
+WSAGetLastError function cannot be used to check the error 
+value because the error value returned can differ from the 
+value in the high word of lParam.
+
+The error and event codes can be extracted from the lParam
+ using the macros WSAGETSELECTERROR and WSAGETSELECTEVENT,
+ defined in Winsock2.h as:
+
+#define WSAGETSELECTERROR(lParam)       HIWORD(lParam)
+#define WSAGETSELECTEVENT(lParam)       LOWORD(lParam)
+

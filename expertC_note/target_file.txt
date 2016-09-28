@@ -1,0 +1,42 @@
+COFF   Common file format
+COFF---->PE,ELF
+PE  Portable Executable
+ELF Executable Linkable Format
+
+DLL  	so
+lib 	a
+
+Relocatable File 可重定位文件。
+.o  .obj
+这类文件包含了代码和数据,可以被用来连接成可执行文件或目标文件,金泰链接库也可以归档为这一类。
+可执行文件	.exe  /bin/bash
+这类文件包含了可以直接执行的程序,它的代表就是ELF可执行文件,它们一般没有扩展名。
+共享目标文件  Shared Object File	.dll .so
+包含代码和数据。可以再两种情况下使用。一连接器可以使用这种文件跟其他的可冲定位文件和共享目标文件产生新的目标文件。二动态连接器可以将几个这种共享目标文件与可执行文件结合,作为进程映像的一部分来运行。
+核心转存文件  Core Dump File		core dump
+当进程意外终止时,系统可以将该京城的地址空间的内容及终止时的一些其他信息转储到核心转储文件。
+
+int global_init_var=84;		//.data
+int global_uninit_var;		//.bss
+void func1(int i){
+	printf("%d\n",i);		//.text
+}
+int main(){
+	static int static_var=85;	//.data
+	static int static_var2;		//.bss
+	int a=1;
+	int b;
+	func1(static_var+static_var2+a+b);
+	return 0;			//.text
+}
+C语言编译后的执行语句都编译成机器代码,保存在.text段。
+已初始化的全局变量和局部变量都保存在.data段。
+未初始化的全局变量和局部金泰变量一般存放在.bss段。
+未初始化的全局变量和局部变量都是0。本来也可以放在.data里面。
+但因为他们都是0,所以为他们在.data段分配控件并且存储数据0是没有必要的。
+程序运行时他们的确要占用空间, 斌企鹅可执行文件必须记录所有你未初始化的全局变量和静态局部变量的总和,记为.bss段。所以.bss段只是为未初始化的全局变量和局部静态变量预留位置而已。
+BSS Block Started by Symbol
+
+程序指令和程序数据。
+代码段属于程序指令   数据段和BSS段属于数据。
+

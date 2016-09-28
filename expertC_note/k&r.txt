@@ -1,0 +1,157 @@
+空格对define的影响
+#define a(y) a_expanded(y)
+a(x);   -------->a_expanded(x);
+#define a (y) a_expanded (y)
+a(x);    ----------->(y) a-expanded (y) (x)
+1972-3-------------->1976-9--------->1983-9-------->
+早期的C		K&R c      s   ANSI C	  |	
+				  |
+			1985-9--------
+1967                    		C++
+----->			^
+			| 1983
+			Ada
+char* strcpy()
+	char* dst,*src;
+{.....}
+
+char* strcpy(char* dst,char* src){......}
+
+foo(const char** p){}
+main(int argc,char **argv){
+	foo(argv);
+}
+foo(argv)  argv---->p   char** ------>const char**	类型提升
+static 在函数内部表示该变量的值在各个调用之间一直保持延续性
+在函数这一级，表示函数只在本文件可见
+extern 用于函数定义，表示全局可见(冗余)
+用于变量表示它在其他地方定义。
+void 作为函数返回类型，表示不返回任何值。
+在指针申明时，表示通用的指针类型。
+在参数列表中，表示没有参数。
+. [] () 优先级高于*
+==高于!=   高于位操作符。
+ratio=*x/*y;   /*y  作为注释 报错
+a //*
+ //*/b
+C语言中表示 a/b
+c++中表示 a      c++中//注释一行知道行尾。
+
+union bit32_tag{
+	int whole;
+	struct{
+		char c0,c1,c2,c3;
+	}byte;
+}value;
+char * const *(*next)();	next是一个纸箱函数的指针，该函数返回另一个指针该指针纸箱一个只读的
+纸箱char型的指针。
+char* (*c[10])(int** p);	//解析时先取最左边的标识符
+char* (*[10])(int** p);	c--->数组
+char* (*      )(int** p);	指向。。。的指针
+char* (       )(int** p);	
+char*           (int** p);	返回的函数
+char* 			指向。。。的指针
+char
+
+不要在一个typedef中放入几个声明器
+typedef int* ptr,(*fun)(),arr[5];
+ptr  指向int的指针
+fun  返回值是int的函数指针
+arr  长度是5的int型的数组
+
+不要把typedef嵌入到声明的中间部分
+unsigned const long typedef int volatile * kumquat;
+可以把typedef看成一种彻底封装的类型
+可以对宏类型名进行扩展,而不可对typedef定义的类型进行扩展。
+
+
+c是一个数组,它的元素类型是函数指针,其所指向的函数是一个指向char型的指针。
+
+extern int* x;	声明一个int型的指针
+extern int y[];	声明一个int型的数组,但长度还未确定。
+
+file1    int mango[100];
+file2   extern int* mango;
+代码运行不起来。   类型不匹配
+其类似于  int guave      extern float guava;  不同文件中。
+声明可以有多次,而定义却只能有一次。
+
+编译器并不为指针所指向的对象分配空间,它只是分配指针本身的空间,除非在定义的同时给赋值给指针一个指针值。
+如,char *p="aaa";
+
+
+预处理----->前端(语法和语义分析)----->后端(代码生成器)----->优化器------->汇编程序------->链接载入器
+静态链接   libc.a	archive
+动态链接   libc.so   just in time  
+
+a.out  assembler output
+nm -sx a.out
+最高内存地址    堆栈段    BSS段     数据段     文本段      未映射区域(最低内存地址)
+
+数组的引用如a[i]在编译时总是被改写成*(a+i)
+a[6]=....   6[a]=....都正确
+
+typedef void (*sighandler_t)(int);
+sighandler_t signal(int signum,sighandler_t handler);
+-----> void (*signal(int signum,void (*handler)(int)))(int);
+
+char (*(*x(void))[3])(void);
+
+/*
+    char (*(*x(void))[3])(void);
+ */
+#include<stdio.h>
+char gc='a';
+char func(void){
+    return gc; 
+}
+typedef char(* pf)(void);
+pf* x(void){
+    pf* p=(pf*)malloc(3*sizeof(pf));
+    p[0]=func;
+}
+int main(){
+    char c;
+//  x()[0]=func;
+    c=(x()[0])();
+    printf("%c\n",c);//	a
+}
+
+
+malloc它的底层通过brk系统调用向操作系统盛情内存。
+unit_t* p=malloc(sizeof(unit_t));
+编译器会做隐式转换,void*可以和任何指针类型之间可以隐式相互转换。
+
+/*
+    myprintf
+    printf(const char*format,... );
+ */
+#include<stdio.h>
+#include<stdarg.h>
+
+void myprintf(const char* format,...){
+    va_list ap;
+    char c,ch,*p;
+    va_start(ap,format);
+    while(c=*format++){
+        switch(c){
+            case 'c':
+                ch=va_arg(ap,int);
+                putchar(ch);
+                break;
+            case 's':
+                p=va_arg(ap,char*);
+                fputs(p,stdout);
+//              fputs(p,1);
+                break;
+            default:
+                putchar(c);
+        }
+    }
+    va_end(ap);
+}
+int main(){
+    char c='1';
+    myprintf("c\ts\n",c,"hello");
+    return 0;
+}

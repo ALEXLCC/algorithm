@@ -1,0 +1,29 @@
+顺序容器
+vector
+deque
+list
+forward_list
+array
+string
+
+vector<vector<string>>lines;
+
+iterator 
+begin()
+cbegin()  // const
+rbegin()	//reverse
+crbegin()
+ 
+a.swap(b)
+swap(a,b)
+
+size()
+max_size()
+empty()
+
+insert()
+emplace()
+erase()
+clear()
+
+begin与end相等则为空,不等则非空。

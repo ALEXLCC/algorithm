@@ -1,0 +1,31 @@
+/usr/include/c++/4.1.1/iostream std  
+段错误  ---->  内存   非法访问。
+for(int i=0;i;)  -std=c99
+new (addr):type
+new int();	未指定则0初始化
+nothrow  别抛
+cpp专用关键字
+and or not and_eq or_eq  not_eq  bitand  bitor  xor  compl ~
+成员指针 &(Date::year)	::域操作符
+int (Date::*p)=&Date::year;	&优先级低  
+int Date::*p    函数指针
+a.*p  成员指针
+引用本质是指针  编译时自动加*和取地址解引用。
+引用必须初始化  且不可更改。
+形参由实参在传参时初始化。
+返回值由return后的来初始化。
+
+int & counter(){
+	static int count=0;
+++count;
+return count;
+}
+返回count变量,可以改变为指针形式。
+
+int* counter(){
+	static int count=0;
+++count;
+return &count;
+}
+
+*counter()---->&count

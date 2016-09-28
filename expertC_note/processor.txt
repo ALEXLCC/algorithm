@@ -1,0 +1,95 @@
+#define f(x) to_str(x) == #x
+f(123)
+----------------->to_str(123) == "123"
+#define f(x) #123 == #x
+#define PASTE(x, y) x ## y
+#define FOOBAR 42
+int main() { return PASTE(FOO, BAR); }	--->42
+#define MAKE_GET_SET(x, T) \
+               void set_ ## x (T o) { this->x = o; } \
+               T get_ ## x () { return this->x; }
+class Foo {
+  MAKE_GET_SET(foo, int);
+
+
+#define DEBUG(fmt, ...) printf(fmt, __VA_ARGS__);
+
+#if 0
+#  if 0	//wrong
+#  else
+#  elif true
+#  endif
+#endif
+
+
+#define foo bar
+#define bar foo
+foo
+// Applies foo -> bar 1
+bar 1
+// Applies bar -> foo 2
+foo 2 1
+// Scans foo again... but doesn't expand it
+
+#define foo bar a baz b
+#define bar foo 1
+#define baz bar 2
+foo
+
+#define foo foo a bar b baz c
+#define bar foo 1
+#define baz bar 2
+foo
+
+foo -> foo a bar b baz c
+    foo -> already expanded, ignore
+    a   -> not a macro, ignore
+    bar -> expand to "foo 1"
+        foo -> expanded at parent scope, ignore
+        1   -> not a macro, ignore
+    b   -> not a macro, ignore
+    baz -> expand to "bar 2"
+        bar -> expand to "foo 1"
+            foo -> already expanded at parent scope, ignore
+            1   -> not a macro, ignore
+        2   -> not a macro, ignore
+    c   -> not a macro, ignore
+
+#define str(...) #__VA_ARGS__
+#define foo(a, b) foo a bar str(b)
+#define bar foo bar 1
+foo(bar, (1, 2, 3))
+
+expand{ foo(bar) }
+        Match foo with definition of macro: foo(a)
+            Bind a to bar
+            Macro expand argument a -> expand{ bar }
+                    bar takes no arguments, no binding is done
+                    Apply rule bar -> foo bar 1
+                    Scan the result for new expanions
+                            foo was already expanded, no further expansion
+ 
+            Bind b to (1, 2, 3)
+            Macro expand argument b -> nothing to expand
+ 
+        Replace macro expanded arguments in body definition:
+            -> foo foo bar 1 bar str((1, 2, 3))
+ 
+        Rescan the body for further expansion:
+                foo: Already expanded on current scope
+                foo: Already expanded on current scope
+                bar: Already expanded (The compiler will have too keep a map of expanded macros for each identifier in a definition!)
+                bar: Needs expansion
+                        Apply rule bar -> foo bar 1
+                        Rescan for further expansion
+                                foo: Already expanded on parent scope
+                                bar: Already expanded on current scope
+                str((1, 2, 3)): Expand macro call
+                        Bind (1, 2, 3) to __VA_ARGS__
+                            Analyze (1, 2, 3) for further expansion
+                            Apply operator '#' to (1, 2, 3) -> "(1, 2, 3)"
+                        Replace #__VA_ARGS__
+                Replace the result of str((1,2,3)) -> "(1, 2, 3)"
+ 
+        Replace the original call "foo(bar, (1, 2, 3))" for the result
+            -> foo foo bar 1 foo bar 1 "(1, 2, 3)"

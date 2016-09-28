@@ -1,0 +1,20 @@
+引用计数
+缓式取出
+mutable 这样的字段可以在任何member function中修改,包括const member function 内部。
+表达式缓评估。
+
+
+临时对象的来源(非堆对象)
+当隐式类型转换被施行以求函数调用能够成功。
+当函数返回对象的时候。
+
+reference-to-const参数,很可能有一个临时对象被产生出来绑定至该参数上。
+虚函数
+virtual tables 	----->vtbls	占用内存
+virtual table pointers ---->vptrs	
+1:在每个需要vtbl的目标文件内都产生一个副本。最后再由连接器剥除重复的副本。最终可执行文件或程序库内只留下一个vtbl的单一实体。
+2:勘探式  class's vtbl产生于 内涵其第一个non-inline,non-pure虚函数定义是 的目标文件中。因此,先前 class C1的vtbl应该放在内涵C1::~C1定义式的目标文件中(该函数非inline)。class C1的vtbl应该放在内涵C1::~C1定义式的目标文件中(该函数非inline)。
+
+最好避免虚函数声明为inline
+编译器通常会忽略虚函数前的inline指示。
+

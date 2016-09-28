@@ -1,0 +1,82 @@
+算数类型
+bool   最小尺寸 未定义
+char	8
+wchar_t 	宽字符   16
+char16_t	Unicode 16
+char32_t	Unicode  32
+short		16
+int		16
+long		32
+long long		64
+float		6位
+double
+long double	10位有效数字
+
+signed  unsigned
+字符  char ,unsigned char   ,signed char
+bool b=42;	b  true
+int i=b;	//i=1
+i=3.14;	//i=3
+double pi=i;	//pi=3.0
+unsigned char c=-1;	//c=255  8bit
+signed char c2=256;	//c2未定义  8 bit
+unsigned u=10;int i=-42;
+i+i=-84
+u+i=4294967264	//自动类型提升。
+unsigned u1=42,u2=10;
+u1-u2=32
+u2-u1=4294967264		//结果是取模后的值
+
+ for(u=10;u>=0;--u){	//迭代到0后-1,至-1即为2^32-1
+          cout<<u<<endl;
+}
+
+
+3.14  3.14e9  0.   0e0  .001
+默认浮点字面值是double类型
+
+L'a';	wchar_t
+u8"hi"	utd-8 
+42ULL 	unsigned long long
+1E-3F 	float
+3.14135L	long double
+
+int a=0;
+int a={0};
+int a{0};
+int a(0);
+
+引用必须初始化,必须引用对象。
+const常量必须初始化。
+指针最好初始化。
+
+auto i=0,*p=&i;
+auto sz=0,pi=9.9;	//错误sz和pi类型不一样。
+
+decltype 选择并返回操作数的类型
+decltype (f()) sum=x;  sum 是函数f()的返回类型。
+const int ci=0,&cj=ci;
+decltype(ci) x=0;	x const int
+decltype(cj) y=x;	y const int&
+decltype(cj) z;	//错误 z是一个引用,但未初始化。
+
+int i=42,*p=&i,&r=i;	
+decltype(r+0) b;	int 
+decltype(*p) c;	//错误 c是int&，必须初始化。 *p 解引用得到的是p所指向的对象。decltype(*p)  -->int&
+
+#include<iostream>
+using namespace std;
+int main(){
+    unsigned u=10;
+    int i=-42;
+    cout<<i+i<<endl;
+    cout<<u+i<<endl;
+    unsigned u1=42,u2=10;
+    cout<<u1-u2<<endl;
+    cout<<u2-u1<<endl;
+//  const int con; //uninitialized  con
+    for(u=10;u>0;--u){
+        cout<<u<<endl;
+    }   
+    return 0;
+}

@@ -1,0 +1,98 @@
+http://download.chinaunix.net/download/0008000/7159.shtml
+yum -y install gcc gcc-c++ ncurses-devel libtool-libs
+cp /usr/local/mysql/share/mysql/my-medium.cnf /etc/my.cnf
+cd /usr/local/mysql
+chown -R mysql .
+charp -R mysql .
+bin/mysql_install_db --user=mysql
+chown -R root .
+chown -R mysql var
+ln -s /usr/local/mysql/share/mysql/mysql.server /etc/init.d/mysqld
+ln -s /usr/local/mysql/bin/mysql /usr/bin
+ln -s /usr/local/mysql/bin/mysqladmin /usr/bin
+service mysqld start
+//设置开机启动
+chkconfig --add mysqld
+chkconfig --level 345 mysqld on
+//设置mysql的密码
+/usr/local/mysql/bin/mysqladmin -u root password 123456 (123456为root密码)
+五、配置mysql数据库
+
+1、cd /usr/local/src/mysql-5.0.41
+
+     cp ./support-files/my-huge.cnf   /etc/my.cnf    #拷贝配置文件
+
+	      vi /etc/my.cnf#编辑配置文件，在[mysqld]部分添加 
+
+		       datadir = /data/mysql    #添加mysql数据库路径
+
+			        ./scripts/mysql_install_db   --user=mysql
+					#生成mysql系统数据库
+
+					    cp ./support-files/mysql.server
+						/etc/rc.d/init.d/mysqld   #把mysql加入系统启动
+
+						     chmod 755 /etc/init.d/mysqld    #增加执行权限
+
+							 2、chkconfig mysqld on  #加入开机启动
+
+							 vi /etc/rc.d/init.d/mysqld
+							 #编辑添加mysql安装路径和数据库存放目录
+
+							 basedir = /usr/local/mysql
+
+							 datadir = /data/mysql 
+
+							 3、vi /etc/profile
+							 #把mysql服务加入系统环境变量：最后添加下面这行
+
+							 export PATH = $PATH:/usr/local/mysql/bin
+
+							 shutdown -r now
+							 #需要重新启动，等系统重启后继续下面操作
+
+							 4、mysql_secure_installation#设置mysql密码，根据提示输入y
+							 回车输入2次密码
+
+							 或者直接修改密码  /usr/local/mysql/bin/mysqladmin
+							 -u root -p password "123456"   #修改密码
+
+							 service mysqld restart    #重启服务
+
+							 到此，mysql安装完成！
+
+							 5、如果想在任一目录下输入mysql -u root -p
+							 进入mysql命令行，需要在每个用户变量里配置。
+
+							 linux在每个用户下面都有个.bash_profile的用户变量文件，将mysql的bin目录路径添加到该用户变量的PATH后面。如：
+
+							 vi /root/.bash_profile
+
+							 添加如下：
+
+							 PATH=$PATH:$HOME/bin:/usr/local/mysql/bin/
+
+							 此时在任一目录下输入mysql -u root -p密码
+							 就能进入mysql命令了。
+
+							 6、mysql的驱动存放位置：jdk主目录/jre/lib/ext/
+
+
+							 7、写个test看看：
+
+							 首先创建数据库
+
+							 create database test;
+
+							 use test;
+
+							 create table users(id varchar(2),name
+							 varchar(8));
+
+							 insert into users values('01','java');
+
+							 insert into users values('02','linux');
+
+							 cd /home
+
+							 vi Users.java

@@ -1,0 +1,6 @@
+this  总是指向这个对象。
+成员函数通过一个名为this的额外隐式参数来访问调用它的对象。
+this的类型	  className * const 
+指向类类型非常亮版本的常量指针。  this的地址值不可变。
+int isbbn()const{ ...}
+const修改隐式this的类型

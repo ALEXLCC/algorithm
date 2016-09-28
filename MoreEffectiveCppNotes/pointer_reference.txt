@@ -1,0 +1,19 @@
+没有null引用。如果要引用对象,但它可能不指向任何对象(NULL),则应该使用指针。若总是指向一个对象,则应该用引用。
+char *pc=0;
+char& rc=*pc;	//null pointer解引用。
+
+string& rs ;	//错误  要初始化。
+string s("xyz");
+string& rs=s;
+
+string *rs;	//未初始化。野指针
+
+void fun(const double& rd){
+	cout<<rd;	//不需判断
+}
+void fun(double* pd){
+	if(pd){
+		cout<<*pd;	//需判断
+	}
+}
+pointer可以重新赋值,而reference只能指向一个对象。
